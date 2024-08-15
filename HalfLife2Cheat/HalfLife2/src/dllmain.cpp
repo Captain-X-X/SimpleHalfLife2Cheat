@@ -6,7 +6,10 @@ BOOL WINAPI HookStart(HMODULE HookModule)
 {
     // Initilize our cheats
     SEHooks::InitilizeHooks();
-
+    while (!GetAsyncKeyState(VK_END) & 1)
+    {
+        std::this_thread::sleep_for(std::chrono::microseconds(200));
+    }
     // Clean up on exit
     SEHooks::DisableHooks();
 

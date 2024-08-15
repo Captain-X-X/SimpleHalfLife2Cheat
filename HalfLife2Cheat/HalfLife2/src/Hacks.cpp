@@ -1,13 +1,12 @@
 #include "pch.h"
 #include "Hacks.h"
-#include "HL2.h"
-ServerLocalEnt* sLocalPlayer;
+//ServerLocalEnt* sLocalPlayer;
 
 namespace Hacks
 {
 	bool bHealth = false;
 	bool bAmmo = false;
-
+	ServerLocalEnt* sLocalPlayer;
 	void Initilize()
 	{
 		sLocalPlayer = HL2SE::getServerPlayer();
@@ -20,7 +19,7 @@ namespace Hacks
 			if (bHealth)
 			{
 				sLocalPlayer->health = 333;
-				sLocalPlayer->suit2 = 333;
+				sLocalPlayer->suit = 333;
 			}
 			if (bAmmo)
 			{
@@ -28,7 +27,7 @@ namespace Hacks
 				sLocalPlayer->smgGrenade = 44;
 				sLocalPlayer->smgReserv = 44;
 				sLocalPlayer->grenades = 44;
-				sLocalPlayer->boltsReserv = 44;
+				sLocalPlayer->crossbowReserv = 44;
 				sLocalPlayer->pistolReserv = 44;
 				sLocalPlayer->rockets = 44;
 				sLocalPlayer->shotgunReserv = 44;
@@ -39,6 +38,12 @@ namespace Hacks
 		}
 	}
 
+	void Shutdown()
+	{
+		sLocalPlayer = nullptr;
+		delete sLocalPlayer;
+	}
+
 	// other
 	void GiveAmmo(int ammo)
 	{
@@ -46,7 +51,7 @@ namespace Hacks
 		sLocalPlayer->smgGrenade = ammo;
 		sLocalPlayer->smgReserv = ammo;
 		sLocalPlayer->grenades = ammo;
-		sLocalPlayer->boltsReserv = ammo;
+		sLocalPlayer->crossbowReserv = ammo;
 		sLocalPlayer->pistolReserv = ammo;
 		sLocalPlayer->rockets = ammo;
 		sLocalPlayer->shotgunReserv = ammo;
@@ -54,6 +59,6 @@ namespace Hacks
 	void GiveHealth(int health)
 	{
 		sLocalPlayer->health = health;
-		sLocalPlayer->suit2 = health;
+		sLocalPlayer->suit = health;
 	}
 }
