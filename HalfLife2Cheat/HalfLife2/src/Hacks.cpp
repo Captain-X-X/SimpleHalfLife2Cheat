@@ -15,7 +15,7 @@ namespace Hacks
 
 	void Update()
 	{
-		if (sLocalPlayer != NULL)
+		if (sLocalPlayer != NULL || sLocalPlayer != nullptr)
 		{
 			if (bHealth)
 			{
