@@ -10,3 +10,5 @@ TODO:
   try make an esp when the ent list if found!
 
   try make aimbot when the ent list if found!
+
+  try fix showcursor 
