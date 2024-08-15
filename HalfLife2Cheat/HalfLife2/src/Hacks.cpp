@@ -24,13 +24,36 @@ namespace Hacks
 			}
 			if (bAmmo)
 			{
-				sLocalPlayer->Magnum44Reserv = 44;
+				sLocalPlayer->point44Reserv = 44;
 				sLocalPlayer->smgGrenade = 44;
 				sLocalPlayer->smgReserv = 44;
+				sLocalPlayer->grenades = 44;
+				sLocalPlayer->boltsReserv = 44;
+				sLocalPlayer->pistolReserv = 44;
+				sLocalPlayer->rockets = 44;
+				sLocalPlayer->shotgunReserv = 44;
 			}
 		}
 		else
 		{
 		}
+	}
+
+	// other
+	void GiveAmmo(int ammo)
+	{
+		sLocalPlayer->point44Reserv = ammo;
+		sLocalPlayer->smgGrenade = ammo;
+		sLocalPlayer->smgReserv = ammo;
+		sLocalPlayer->grenades = ammo;
+		sLocalPlayer->boltsReserv = ammo;
+		sLocalPlayer->pistolReserv = ammo;
+		sLocalPlayer->rockets = ammo;
+		sLocalPlayer->shotgunReserv = ammo;
+	}
+	void GiveHealth(int health)
+	{
+		sLocalPlayer->health = health;
+		sLocalPlayer->suit2 = health;
 	}
 }

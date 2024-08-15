@@ -12,6 +12,14 @@ namespace Menuc
 			{
 				ImGui::Checkbox("God Mode", &Hacks::bHealth);
 				ImGui::Checkbox("Unlimited Ammo", &Hacks::bAmmo);
+				if (ImGui::Button("Give Ammo!"))
+				{
+					Hacks::GiveAmmo(9999);
+				}
+				if (ImGui::Button("Give Health!"))
+				{
+					Hacks::GiveHealth(9999);
+				}
 				ImGui::EndTabItem();
 			}
 
