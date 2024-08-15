@@ -5,5 +5,7 @@ made by captain_xx on discord :)
 
 TODO:
   add imgui style
+  
   find some type of ent list
+  
   find view angles that can be written too
