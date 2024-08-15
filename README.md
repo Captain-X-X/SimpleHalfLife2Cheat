@@ -4,9 +4,9 @@ made by captain_xx on discord :)
 
 
 TODO:
-
-  add imgui style
   
   find some type of ent list
-  
-  find view angles that can be written too
+
+  try make an esp when the ent list if found!
+
+  try make aimbot when the ent list if found!
