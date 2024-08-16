@@ -5,7 +5,7 @@ made by captain_xx on discord :)
 
 TODO:
   
-  find some type of ent list
+  find some type of ent list. (found and will be added soon!)
 
   try make an esp when the ent list if found!
 
