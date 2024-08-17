@@ -1,18 +1,20 @@
 #include "pch.h"
 #include "Hacks.h"
-//ServerLocalEnt* sLocalPlayer;
-
+#include "Draw.h"
+extern int winWidth;
+extern int winHeight;
+extern bool menu_open;
 namespace Hacks
 {
 	bool bHealth = false;
 	bool bAmmo = false;
-	ServerLocalEnt* sLocalPlayer;
+	ServerLocalEnt* sLocalPlayer = nullptr; // this has some writeable ammo, position and view angles, would be nice to use the ent list.. but im still reversing it some. sorry haha.
 	void Initilize()
 	{
 		sLocalPlayer = HL2SE::getServerPlayer();
 	}
 
-	void Update()
+	void Update(IDirect3DDevice9* pDevice/* we take the D3D9 device for rendering esp.. if ever i find that stoopid entlist*/)
 	{
 		if (sLocalPlayer != NULL || sLocalPlayer != nullptr)
 		{
@@ -35,6 +37,7 @@ namespace Hacks
 		}
 		else
 		{
+			menu_open = false;
 		}
 	}
 

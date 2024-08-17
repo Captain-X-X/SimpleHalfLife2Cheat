@@ -5,6 +5,8 @@
 
 bool menu_open = false;
 bool setup = false;
+int winWidth = 0;
+int winHeight = 0;
 
 uintptr_t showCursorAddr = 0;
 typedef int(__stdcall* _cShowCursor)(BOOL bShow);
@@ -23,7 +25,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		menu_open = !menu_open;
 		showCursor(true);
 		// initilize our cheat stuffz
-		Hacks::Initilize();
+		Hacks::Initilize(); // i do tis so we dont have to initilize every frame, only when the menu reopens. because the values I use for ammo and stuff are invalid when a new part of thr map loads. 
 	}
 
 	if (menu_open && ImGui_ImplWin32_WndProcHandler(window, msg, wParam, lParam))
@@ -48,6 +50,7 @@ void DestroyDirectX()
 }
 void Setup()
 {
+	// this is my attempt at showing the cursor when the menu is open. it dont work im stoopid  :<
 	showCursorAddr = (uintptr_t)GetProcAddress(GetModuleHandle("user32.dll"), "ShowCursor");;
 	if (!showCursorAddr)
 	{
@@ -74,16 +77,26 @@ void Setup()
 		throw std::runtime_error("Failed to create window class.");
 	}
 
+	// create win32 window for getting D3D device
 	window = CreateWindow(windowClass.lpszClassName, "hack wnd", WS_OVERLAPPEDWINDOW, 0, 0, 100, 100, 0, 0, windowClass.hInstance, 0);
 	if (!window)
 	{
 		throw std::runtime_error("Failed to create window.");
 	}
 
+	// get window size
+	//RECT winRect;
+	//GetWindowRect(window, &winRect);
+	//winWidth = winRect.right - winRect.left;
+	//winHeight = winRect.bottom - winRect.top;
+	winWidth = 1280;
+	winHeight = 720;
+
+	// get handle to d3d9.dll in hl2
 	const auto handle = GetModuleHandle("d3d9.dll");
 	if (!handle)
 		throw std::runtime_error("Failed to get D3D9 handle.");
-
+	// setup a template like function for getting a functions address
 	using CreateFn = LPDIRECT3D9(__stdcall*)(UINT);
 	const auto create = reinterpret_cast<CreateFn>(GetProcAddress(handle, "Direct3DCreate9"));
 	if (!create)
@@ -92,7 +105,7 @@ void Setup()
 	d3d9 = create(D3D_SDK_VERSION);
 	if (!d3d9)
 		throw std::runtime_error("Failed to setup D3D9.");
-
+	// setting up D3D9
 	D3DPRESENT_PARAMETERS d3dparams = { };
 	d3dparams.BackBufferWidth = 0;
 	d3dparams.BackBufferHeight = 0;
@@ -112,7 +125,7 @@ void Setup()
 	{
 		throw std::runtime_error("Failed to setup dx9.");
 	}
-
+	// cleanup then D3D9 can be hooked!
 	if (window)
 	{
 		DestroyWindow(window);
@@ -249,7 +262,7 @@ long __stdcall callback_EndScene(IDirect3DDevice9* pDevice)
 		ImGui::Render();
 		ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
 	}
-	Hacks::Update();
+	Hacks::Update(pDevice);
 	return EndSceneOriginal(pDevice, pDevice);;
 }
 
@@ -309,6 +322,7 @@ namespace SEHooks
         printf("Unhooking & exiting thread!\n");
         std::fclose(console);
 
+		menu_open = false; // for some reason, if you eject when the menu is open it will crash the game. i hate this.
 		Destroy();
 		Hacks::Shutdown();
 

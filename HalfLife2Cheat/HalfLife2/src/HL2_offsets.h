@@ -3,14 +3,31 @@
 #define int32_t int
 #define vec3 Vector3
 #define vec2 Vector2
+#define Matrix4x4 float
 #define GameBase  (uintptr_t)GetModuleHandle(NULL)
 #define ServerDLL (uintptr_t)GetModuleHandle("server.dll")
 #define EngineDLL (uintptr_t)GetModuleHandle("engine.dll")
+#define ClientDLL (uintptr_t)GetModuleHandle("client.dll")
 
 #define ServerPlayerAddy 0x0635334
 #define EngineViewAngles 0x000BA2E4
+//#define CBaseEntlist 0x45C4D4
+/*
+* these be my workings.. or self harm.. why cant the entlist be easy to find :<
+maybe
+[<server.dll>+5C089C] <- this has ourself + a load of unknown world ents
+2C7D0A20
+45C4D4 <- client.dll
+5C089C <- server.dll
+635324 <- server.dll
+5C089C <- server.dll
+612CA4 <- server.dll
+*/
 
-class ServerLocalEnt // [<server.dll>+00635334]
+#define MaxEntsInList 64 // this is for ent list scanning, all addresses i have found so far only have world ents + ourself...
+#define LocalPlayerOffsetInEntList 0
+
+class ServerLocalEnt // [<server.dll>+00635334] // im not 100% sure this is good, only time will tell.
 {
 public:
 	char pad_0000[144]; //0x0000
@@ -44,17 +61,33 @@ public:
 	char pad_0D60[4920]; //0x0D60
 }; //Size: 0x2098
 
-class ViewAngles // [<engine.dll>+000BA2E4]
+class ViewAngles // [<engine.dll>+000BA2E4] //  this has view angles that can be written too!!!
 {
 public:
 	char pad_0000[92]; //0x0000
 	Vector2 viewAngles; //0x005C
 }; //Size: 0x0064
 
-class FloatBoatThingy // [<server.dll>+00636B64] // this is not valid, it was for 1 game contex but no more!!
-{
-public:
-	char pad_0000[1776]; //0x0000
-	int32_t gunAmmo; //0x06F0
-	char pad_06F4[2380]; //0x06F4
-}; //Size: 0x1040
+//class clientInfo
+//{
+//public:
+//	class Ent* entPtr; //0x0000
+//	int32_t N000026DC; //0x0004
+//	class clientInfo* bLink; //0x0008
+//	class clientInfo* fLink; //0x000C
+//}; //Size: 0x0010
+//
+//class CBaseEntList // [<client.dll>+45C4D4]
+//{
+//public:
+//	char pad_0000[20]; //0x0000
+//	class clientInfo entList[64]; //0x0014
+//}; //Size: 0x0414
+//
+//class Ent
+//{
+//public:
+//	char pad_0000[224]; //0x0000
+//	int32_t health; //0x00E0
+//	char pad_00E4[692]; //0x00E4
+//}; //Size: 0x0398
