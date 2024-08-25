@@ -9,9 +9,11 @@
 #define EngineDLL (uintptr_t)GetModuleHandle("engine.dll")
 #define ClientDLL (uintptr_t)GetModuleHandle("client.dll")
 
-#define ServerPlayerAddy 0x0635334
-#define EngineViewAngles 0x000BA2E4
-//#define CBaseEntlist 0x45C4D4
+#define LocalPlayerEnt     0x635334
+#define ServerPlayerAddy   0x0635334
+#define EngineViewAngles   0x000BA2E4
+#define ConsolePrintFunc   0x1026F3F0 // <- server.dll if you want to try make use of this :)
+//#define CBaseEntlist     0x45C4D4
 /*
 * these be my workings.. or self harm.. why cant the entlist be easy to find :<
 maybe

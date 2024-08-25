@@ -1,4 +1,10 @@
 #pragma once
+/*
+* 
+	This is a simple D3D9 drawing class.
+	more thingd to draw will be added soon. or something..
+
+*/
 #include <d3dx9.h>
 
 namespace DX9Draw
